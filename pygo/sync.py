@@ -1,12 +1,17 @@
+import time
+from multiprocessing import Value
+
+
 class WaitGroup(object):
     def __init__(self):
-        pass
+        self.counter = Value('i', 0)
 
-    def wait(self):
-        pass
+    def wait(self, interval=0.001):
+        while self.counter.value != 0:
+            time.sleep(interval)
 
     def add(self, count):
-        pass
+        self.counter.value += count
 
     def done(self):
-        pass
+        self.counter.value -= 1
