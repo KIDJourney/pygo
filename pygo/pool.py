@@ -17,6 +17,7 @@ def get_wp():
     global wp
     if wp is None:
         wp = WorkerPool()
+        wp.start()
     return wp
 
 
@@ -50,3 +51,8 @@ class WorkerPool:
             i.start()
 
         self.queue.close()
+
+    def put(self, task):
+        if task is None:
+            return
+        self.queue.put(task)

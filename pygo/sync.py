@@ -11,7 +11,9 @@ class WaitGroup(object):
             time.sleep(interval)
 
     def add(self, count):
-        self.counter.value += count
+        with self.counter.get_lock():
+            self.counter.value += count
 
     def done(self):
-        self.counter.value -= 1
+        with self.counter.get_lock():
+            self.counter.value -= 1

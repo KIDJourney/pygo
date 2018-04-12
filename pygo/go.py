@@ -1,5 +1,6 @@
 import logging
 from .conf import use_process
+from .pool import get_wp
 
 if use_process():
     from multiprocessing import Process as Worker
@@ -8,5 +9,4 @@ else:
 
 
 def go(closure, *args, **kwargs):
-    w = Worker(target=closure, args=args, kwargs=kwargs)
-    w.start()
+    get_wp().put((closure, args, kwargs))
